@@ -35,11 +35,5 @@
           enabled: yes
           masked: no
 
-      - name: enable a timer for dnf-automatic
-        systemd:
-           name: dnf-automatic.timer
-           state: started
-           enabled: True
-
       - name: just force systemd to reread configs (2.4 and above)
         systemd: daemon_reload=yes
