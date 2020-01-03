@@ -8,6 +8,10 @@
         stat: path=/etc/init.d/httpd
         register: service_status
         
+      - command: service httpd status
+        args:
+        warn: false
+        
       - name: Stop Service
         service: name=httpd state=stopped
         when: service_status.stat.exists
