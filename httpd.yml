@@ -5,7 +5,7 @@
     become_user: root
     tasks:
       - name: Check if Service Exists
-        stat: path=/etc/init.d/{{service_name}}
+        stat: path=/etc/init.d/httpd
         register: service_status
         
       - name: Stop Service
