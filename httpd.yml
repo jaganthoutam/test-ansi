@@ -11,7 +11,6 @@
       - name: Stop Service
         service: name=httpd state=stopped
         when: service_status.stat.exists
-        register: service_stopped
         
       - name: ensure apache is at the latest version
         yum:
