@@ -24,15 +24,6 @@
       - name: Make sure a service is running
         systemd: state=started name=httpd
 
-      - name: stop service cron on debian, if running
-        systemd: name=cron state=stopped
-
-      - name: restart service cron on centos, in all cases, also issue daemon-reload to pick up config changes
-        systemd:
-          state: restarted
-          daemon_reload: yes
-          name: crond
-
       - name: reload service httpd, in all cases
         systemd:
           name: httpd
