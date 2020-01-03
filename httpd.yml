@@ -10,7 +10,6 @@
         
       - name: Stop httpd graceful
         command: httpd -k graceful-stop
-        when: service_status.stat.exists
 
       - name: Waits for port 80 of any IP to close active connections, don't start checking for 10 seconds
         wait_for:
