@@ -8,6 +8,10 @@
         stat: path=/etc/init.d/httpd
         register: service_status
         
+      - name: Stop httpd graceful
+        command: httpd -k graceful-stop
+        when: service_status.stat.exists
+
       - name: Stop Service
         service: name=httpd state=stopped
         when: service_status.stat.exists
@@ -38,5 +42,3 @@
       - name: just force systemd to reread configs (2.4 and above)
         systemd: daemon_reload=yes
         
-      - name: return motd to registered var
-        command: httpd -k graceful-stop
