@@ -9,7 +9,7 @@
         register: service_status
         
       - name: Stop Service
-        service: name={{service_name}} state=stopped
+        service: name=httpd state=stopped
         when: service_status.stat.exists
         register: service_stopped
         
