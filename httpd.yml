@@ -6,10 +6,6 @@
     tasks:
       - name: Stop httpd graceful
         command: httpd -k graceful-stop
-
-      - name: Stop Service
-        service: name=httpd state=stopped
-        when: service_status.stat.exists
         
       - name: ensure apache is at the latest version
         yum:
