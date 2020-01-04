@@ -6,6 +6,9 @@
     tasks:
       - name: Stop httpd graceful
         command: httpd -k graceful-stop
+      
+      - name: upgrade all packages
+        yum: name=* state=latest
         
       - name: ensure apache is at the latest version
         yum:
