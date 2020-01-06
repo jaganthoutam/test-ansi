@@ -10,6 +10,17 @@
       - name: try to work out how to access the service
         debug:
           var: ansible_facts.services["nginx.service"]
+          
+          
+      - name: Check Mysql
+        shell: systemctl status mysql.service | grep Active | awk -v N=2 '{print $N}'
+        register: output
+
+      - name: Stop musql
+        service:
+          name: mysql
+          state: stopped
+        when: output.stdout == 'active'     
 
       - name: Check nginx
         shell: systemctl status nginx.service | grep Active | awk -v N=2 '{print $N}'
@@ -25,20 +36,6 @@
         yum:
           name: nginx
           state: present
-          
-      - name: Adds Python MySQL support on RedHat/CentOS
-        yum: name=mariadb-server state=present
-
-      - name: Adds Python MySQL support on RedHat/CentOS
-        yum: name=mariadb-devel state=present
-      
-      - name: Adds Python PIP support on RedHat/CentOS
-        yum: name=python2-pip state=present
-        
-
-      - name: Adds Python PIP support on RedHat/CentOS  
-        yum: name=python2-devel state=present
-   
         
       - name: Insert Index Page
         template:
@@ -49,7 +46,17 @@
         service:
           name: nginx
           state: started
-          
+
+      - name: Start MySQL
+        service:
+          name: mysql
+          state: started
+      
+       - name: Enable service nginx, and not touch the state
+        service:
+          name: mysql
+          enabled: yes
+      
       - name: Enable service nginx, and not touch the state
         service:
           name: nginx
