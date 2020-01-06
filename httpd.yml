@@ -28,7 +28,9 @@
           
       - name: Adds Python MySQL support on RedHat/CentOS
         yum: name=mariadb state=present
-        when: ansible_os_family == 'RedHat'
+
+      - name: Adds Python MySQL support on RedHat/CentOS
+        yum: name=mariadb-devel state=present
       
       - name: Adds Python PIP support on RedHat/CentOS
         yum: name=python2-pip state=present
