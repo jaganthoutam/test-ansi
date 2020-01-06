@@ -27,7 +27,7 @@
           state: present
           
       - name: Adds Python MySQL support on RedHat/CentOS
-        yum: name=MySQL-python state=present
+        yum: name=mariadb state=present
         when: ansible_os_family == 'RedHat'
         
       - name: Sets the root password 
