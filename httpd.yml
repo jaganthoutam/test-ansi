@@ -29,6 +29,16 @@
       - name: Adds Python MySQL support on RedHat/CentOS
         yum: name=mariadb state=present
         when: ansible_os_family == 'RedHat'
+      
+      - name: Adds Python PIP support on RedHat/CentOS
+        yum: name=python-pip state=present
+        
+
+      - name: Adds Python PIP support on RedHat/CentOS  
+        yum: name=python-devel state=present
+        
+      - name: Adds Python PIP support on RedHat/CentOS  
+        command: pip install mysql-python
         
       - name: Sets the root password 
         mysql_user: user=root password="test123" host=localhost
