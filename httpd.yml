@@ -38,7 +38,7 @@
         yum: name=python2-devel state=present
         
       - name: Adds Python PIP support on RedHat/CentOS  
-        command: pip install mysql-python
+        command: pip2 install mysql-python
         
       - name: Sets the root password 
         mysql_user: user=root password="test123" host=localhost
