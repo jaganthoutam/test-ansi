@@ -4,6 +4,30 @@
     become: yes
     become_user: root
     tasks:
+    #### Add users to sudo and add pub key 
+      - name: Make sure we have a 'wheel' group
+        group:
+          name: wheel
+          state: present
+
+      - name: Validate the sudoers file before saving
+        lineinfile:
+          path: /etc/sudoers
+          state: present
+          regexp: '^%ADMIN ALL='
+          line: '%ADMIN ALL=(ALL) NOPASSWD: ALL'
+          validate: /usr/sbin/visudo -cf %s
+
+      - name: Add sudoers users to wheel group
+        user: name=deployer groups=wheel append=yes state=present createhome=yes
+
+      - name: Set authorized key taken from file
+        authorized_key:
+          user: deployer
+          state: present
+          key: "{{ lookup('file', '/home/ec2-user/.ssh/id_rsa.pub') }}"
+    
+    
       - name: get service facts
         service_facts:
 
