@@ -41,11 +41,11 @@
         template:
           src: index.html
           dest: /usr/share/nginx/html/index.html
-          
-      - name: sleep for 300 seconds and continue with play
-        wait_for:
-        timeout: 300
-        delegate_to: localhost
+      -  name: Sleep for 60 seconds and timeout
+         tags: sleep60
+         wait_for:
+           delay: 60
+           timeout: 0
 
       - name: Start NGiNX
         service:
