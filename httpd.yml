@@ -10,45 +10,12 @@
 
       - name: try to work out how to access the service
         debug:
-          var: ansible_facts.services["httpd.service"]
-       
-      - name: ensure apache is at the latest version
-        yum:
-          name: httpd
-          state: latest
-          
-      - name: Make sure a service is running
-        systemd: state=started name=httpd
-
-      - name: reload service httpd, in all cases
-        systemd:
-          name: httpd
-          state: reloaded
-
-      - name: enable service httpd and ensure it is not masked
-        systemd:
-          name: httpd
-          enabled: yes
-          masked: no
-
-      - name: just force systemd to reread configs (2.4 and above)
-        systemd: daemon_reload=yes
-        
-      - name: Install a list of packages  
-        yum:
-          name:
-            - nginx
-            - postgresql
-            - postgresql-server
-          state: present
+          var: ansible_facts.services["nginx.service"]
           
       - name: Install nginx
         yum:
           name: nginx
           state: present
-          
-      - name: Stop httpd graceful
-        command: httpd -k graceful-stop
           
       - name: Insert Index Page
         template:
