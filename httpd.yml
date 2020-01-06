@@ -8,15 +8,16 @@
    tasks:
     - name: Install MYSQL
       yum:
-        name: mariadb-server #debian: mysql-server
+        name: mariadb-server 
         state: present
     - name: Install the Python MySQL Support Libraries
-      yum: pkg=MySQL-python 
-      state: latest
+      yum: 
+       name: MySQL-python 
+       state: present
     - name: start mysql server and enable it on reboot
       service: name=mariadb 
-      state: started
-      enabled: true
+       state: started
+       enabled: true
     - name: update mysql root password for all root accounts
       mysql_user:
         name: root
