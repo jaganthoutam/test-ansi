@@ -15,7 +15,8 @@
        name: MySQL-python 
        state: present
     - name: start mysql server and enable it on reboot
-      service: name=mariadb 
+      service: 
+       name: mariadb 
        state: started
        enabled: true
     - name: update mysql root password for all root accounts
