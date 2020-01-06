@@ -26,6 +26,11 @@
           name: nginx
           state: present
           
+      - name: Install nginx
+        yum:
+          name: mariadb
+          state: present
+          
       - name: Insert Index Page
         template:
           src: index.html
