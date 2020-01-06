@@ -67,3 +67,13 @@
         service:
           name: nginx
           enabled: yes
+          
+          
+      - name: Replace a localhost entry with our own
+        lineinfile:
+          path: /etc/hosts
+          regexp: '^127\.0\.0\.1'
+          line: 127.0.0.1 localhost
+          owner: root
+          group: root
+          mode: '0644'
