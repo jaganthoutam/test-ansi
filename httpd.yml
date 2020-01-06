@@ -31,11 +31,11 @@
         when: ansible_os_family == 'RedHat'
       
       - name: Adds Python PIP support on RedHat/CentOS
-        yum: name=python-pip state=present
+        yum: name=python2-pip state=present
         
 
       - name: Adds Python PIP support on RedHat/CentOS  
-        yum: name=python-devel state=present
+        yum: name=python2-devel state=present
         
       - name: Adds Python PIP support on RedHat/CentOS  
         command: pip install mysql-python
