@@ -26,7 +26,7 @@
           name: nginx
           state: present
           
-      - name: Install nginx
+      - name: Install mariadb
         yum:
           name: mariadb
           state: present
