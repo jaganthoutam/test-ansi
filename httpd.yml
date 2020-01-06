@@ -1,54 +1,42 @@
 ---
- - name: Playbook
-   hosts: webserver
-   become: yes
-   become_user: root
-   vars:
-     mysql_root_password: passwd
-   tasks:
-    - name: Install MYSQL
-      yum:
-        name: mariadb-server 
-        state: present
-    - name: Install the Python MySQL Support Libraries
-      yum: 
-       name: MySQL-python 
-       state: present
-    - name: start mysql server and enable it on reboot
-      service: 
-       name: mariadb 
-       state: started
-       enabled: true
-    - name: update mysql root password for all root accounts
-      mysql_user:
-        name: root
-        host: "{{ item }}"
-        password: "{{ mysql_root_password }}"
-        login_user: root
-        login_password: "{{ mysql_root_password }}"
-        check_implicit_admin: yes
-        priv: "*.*:ALL,GRANT"
-      with_items:
-        - "{{ ansible_hostname }}"
-        - 127.0.0.1
-        - ::1
-        - localhost
-        - name: Copy the root credentials as .my.cnf file
-      template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
-    - name: Create a New Test DB called MyNewDB
-      mysql_db: name=MyNewDB state=present login_user=root login_password={{ mysql_root_password }}    
-      
-#      - name: Insert Index Page
-#        template:
-#          src: index.html
-#          dest: /usr/share/nginx/html/index.html
-#
-#      - name: Start NGiNX
-#        service:
-#          name: nginx
-#          state: started
-#          
-#      - name: Enable service nginx, and not touch the state
-#        service:
-#          name: nginx
-#          enabled: yes
+  - name: Playbook
+    hosts: webserver
+    become: yes
+    become_user: root
+    tasks:
+      - name: get service facts
+        service_facts:
+
+      - name: try to work out how to access the service
+        debug:
+          var: ansible_facts.services["nginx.service"]
+
+      - name: Check nginx
+        shell: systemctl status nginx.service | grep Active | awk -v N=2 '{print $N}'
+        register: output
+
+      - name: Stop nginx
+        service:
+          name: nginx
+          state: stopped
+        when: output.stdout == 'active'
+        
+      - name: Install nginx
+        yum:
+          name: nginx
+          state: present
+          
+      - name: Insert Index Page
+        template:
+          src: index.html
+          dest: /usr/share/nginx/html/index.html
+
+      - name: Start NGiNX
+        service:
+          name: nginx
+          state: started
+          
+      - name: Enable service nginx, and not touch the state
+        service:
+          name: nginx
+          enabled: yes
