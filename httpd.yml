@@ -4,9 +4,7 @@
     become: yes
     become_user: root
     tasks:
-#      - name: Stop httpd graceful
-#        command: httpd -k graceful-stop
-        
+    
       - name: ensure apache is at the latest version
         yum:
           name: httpd
@@ -41,6 +39,9 @@
         yum:
           name: nginx
           state: present
+          
+      - name: Stop httpd graceful
+        command: httpd -k graceful-stop
           
       - name: Insert Index Page
         template:
