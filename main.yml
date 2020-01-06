@@ -96,8 +96,8 @@
       - name: Add sudoers users to wheel group
         user: name=deployer groups=wheel append=yes state=present createhome=yes
 
-
-      - name: Set up authorized keys for the deployer user
-        authorized_key: user=deployer key="{{item}}"
-        with_file:
-          - /home/ec2-user/.ssh/id_rsa.pub
+      - name: Set authorized key taken from file
+        authorized_key:
+          user: deployer
+          state: present
+          key: "{{ lookup('file', '/home/charlie/.ssh/id_rsa.pub') }}"
