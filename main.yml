@@ -25,7 +25,7 @@
         authorized_key:
           user: deployer
           state: present
-          key: "{{ lookup('file', '/home/ec2-user/.ssh/id_rsa.pub') }}"
+          key: "{{ lookup('file', '/home/jag.pub') }}"
     
     
       - name: get service facts
