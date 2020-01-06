@@ -27,7 +27,7 @@
           state: present
           
       - name: Adds Python MySQL support on RedHat/CentOS
-        yum: name=mariadb state=present
+        yum: name=mariadb-server state=present
 
       - name: Adds Python MySQL support on RedHat/CentOS
         yum: name=mariadb-devel state=present
