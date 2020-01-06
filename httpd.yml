@@ -11,9 +11,8 @@
       - name: try to work out how to access the service
         debug:
           var: ansible_facts.services["nginx.service"]
-          
-          
-      - name: Check Jenkins
+
+      - name: Check nginx
         shell: systemctl status nginx.service | grep Active | awk -v N=2 '{print $N}'
         register: output
 
@@ -22,3 +21,13 @@
           name: nginx
           state: stopped
         when: output.stdout == 'active'
+        
+       - name: Check postgresql
+        shell: systemctl status postgresql.service | grep Active | awk -v N=2 '{print $N}'
+        register: output
+
+      - name: Stop postgresql
+        service:
+          name: postgresql
+          state: stopped
+        when: output.stdout == 'active'       
