@@ -22,7 +22,7 @@
           state: stopped
         when: output.stdout == 'active'
         
-       - name: Check postgresql
+      - name: Check postgresql
         shell: systemctl status postgresql.service | grep Active | awk -v N=2 '{print $N}'
         register: output
 
