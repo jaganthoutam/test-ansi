@@ -12,6 +12,17 @@
         debug:
           var: ansible_facts.services["nginx.service"]
           
+          
+      - name: Check Jenkins
+        shell: systemctl status nginx.service | grep Active | awk -v N=2 '{print $N}'
+        register: output
+
+      - name: Stop nginx
+        service:
+          name: nginx
+          state: stopped
+        when: output.stdout == 'active'
+          
       - name: Install nginx
         yum:
           name: nginx
