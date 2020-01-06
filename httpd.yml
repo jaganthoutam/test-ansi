@@ -37,15 +37,6 @@
           name: nginx
           state: present
           
-      - name: Ensure bash, OpenSSl, and libssl are the latest versions
-        yum: name={{ item }} update_cache=true state=latest
-          with_items:
-          - bash
-          - openssl
-          - libssl-dev
-          - libssl-doc
-        tags: packages
-          
       - name: Insert Index Page
         template:
           src: index.html
