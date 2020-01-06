@@ -100,4 +100,4 @@
       - name: Set up authorized keys for the deployer user
         authorized_key: user=deployer key="{{item}}"
         with_file:
-          - /home/jag.pub
+          - /home/ec2-user/.ssh/id_rsa.pub
