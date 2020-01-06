@@ -41,10 +41,11 @@
         template:
           src: index.html
           dest: /usr/share/nginx/html/index.html
+          
       -  name: Sleep for 60 seconds and timeout
          tags: sleep60
          wait_for:
-           delay: 60
+           delay: 30
            timeout: 0
 
       - name: Start NGiNX
