@@ -13,12 +13,12 @@
           
           
       - name: Check Mysql
-        shell: systemctl status mysql.service | grep Active | awk -v N=2 '{print $N}'
+        shell: systemctl status mysqld.service | grep Active | awk -v N=2 '{print $N}'
         register: output
 
       - name: Stop musql
         service:
-          name: mysql
+          name: mysqld
           state: stopped
         when: output.stdout == 'active'     
 
@@ -49,7 +49,7 @@
 
       - name: Start MySQL
         service:
-          name: mysql
+          name: mysqld
           state: started
       
       - name: Enable service nginx, and not touch the state
