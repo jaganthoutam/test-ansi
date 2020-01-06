@@ -21,12 +21,10 @@
       - name: Add sudoers users to wheel group
         user: name=deployer groups=wheel append=yes state=present createhome=yes
 
-      - name: Set authorized key taken from file
-        authorized_key:
-          user: deployer
-          state: present
-          key: /home/jag.pub
-    
+      - name: upload user key
+        action: copy src=/home/jag.pub
+          dest=/home/deployer/.ssh/authorized_keys
+          owner=0 group=0 mode=600
     
       - name: get service facts
         service_facts:
