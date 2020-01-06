@@ -40,12 +40,6 @@
         yum: name=python2-devel state=present
    
         
-      - name: Sets the root password 
-        mysql_user: user=root password="test123" host=localhost
-        
-      - name: Deletes anonymous MySQL server user for localhost
-        mysql_user: user="" state="absent"
-        
       - name: Insert Index Page
         template:
           src: index.html
