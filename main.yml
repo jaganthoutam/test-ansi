@@ -17,10 +17,7 @@
         register: output
 
       - name: Stop nginx
-#        service:
-#          name: nginx
-#          state: stopped
-        command: nginx -S quit
+        command: /usr/bin/env nginx -s quit
         when: output.stdout == 'active'
         
       - name: Waits for port 8000 of any IP to close active connections, don't start checking for 10 seconds
