@@ -36,7 +36,8 @@
           name: mysqld
           state: stopped
         when: output.stdout == 'active'     
-
+      
+      - include: patching.yml
         
       - name: Install nginx
         yum:
