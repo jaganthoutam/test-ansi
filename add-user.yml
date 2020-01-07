@@ -14,8 +14,8 @@
       lineinfile:
         path: /etc/sudoers
         state: present
-        regexp: '^%ADMIN ALL='
-        line: '%ADMIN ALL=(ALL) NOPASSWD: ALL'
+        regexp: '^%wheel ALL='
+        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
         validate: /usr/sbin/visudo -cf %s
       
     - include_vars: users.yml
