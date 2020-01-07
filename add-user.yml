@@ -22,6 +22,14 @@
     - name: Creating users to Jump Server
       user: name="{{ item.username}}" groups=wheel append=yes state=present createhome=yes
       with_items: "{{ users }}"
+      
+    - name: Create .ssh folder
+      file:
+        path: ~"{{ item.username}}"/.ssh
+        state: directory
+        owner: "{{ item.username}}"
+        group: wheel
+        mode: 0700
 
     - name: Placing SSH Key to Authorized Key
       authorized_key: user="{{item.username}}" key="{{ lookup('file', './keys/{{ item.username}}')}}"
