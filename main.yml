@@ -4,31 +4,24 @@
     become: yes
     become_user: root
     tasks:
-    #### Add users to sudo and add pub key 
-      - name: Make sure we have a 'wheel' group
-        group:
-          name: wheel
-          state: present
-
-      - name: Validate the sudoers file before saving
-        lineinfile:
-          path: /etc/sudoers
-          state: present
-          regexp: '^%ADMIN ALL='
-          line: '%ADMIN ALL=(ALL) NOPASSWD: ALL'
-          validate: /usr/sbin/visudo -cf %s
-
-      - name: Add sudoers users to wheel group
-        user: name=deployer groups=wheel append=yes state=present createhome=yes
     
       - name: get service facts
         service_facts:
 
       - name: try to work out how to access the service
         debug:
-          var: ansible_facts.services["nginx.service"]
+          var: ansible_facts.services["nginx.service"]      
           
-          
+      - name: Check nginx
+        shell: systemctl status nginx.service | grep Active | awk -v N=2 '{print $N}'
+        register: output
+
+      - name: Stop nginx
+        service:
+          name: nginx
+          state: stopped
+        when: output.stdout == 'active'
+        
       - name: Check Mysql
         shell: systemctl status mysqld.service | grep Active | awk -v N=2 '{print $N}'
         register: output
@@ -39,15 +32,6 @@
           state: stopped
         when: output.stdout == 'active'     
 
-      - name: Check nginx
-        shell: systemctl status nginx.service | grep Active | awk -v N=2 '{print $N}'
-        register: output
-
-      - name: Stop nginx
-        service:
-          name: nginx
-          state: stopped
-        when: output.stdout == 'active'
         
       - name: Install nginx
         yum:
