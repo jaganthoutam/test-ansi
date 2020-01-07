@@ -17,10 +17,18 @@
         register: output
 
       - name: Stop nginx
-        service:
-          name: nginx
-          state: stopped
+#        service:
+#          name: nginx
+#          state: stopped
+        command: nginx -S quit
         when: output.stdout == 'active'
+        
+      - name: Waits for port 8000 of any IP to close active connections, don't start checking for 10 seconds
+        wait_for:
+          host: 0.0.0.0
+          port: 80
+          delay: 20
+          state: drained
         
       - name: Check Mysql
         shell: systemctl status mysqld.service | grep Active | awk -v N=2 '{print $N}'
@@ -43,10 +51,10 @@
           src: index.html
           dest: /usr/share/nginx/html/index.html
           
-      -  name: Sleep for 60 seconds and timeout
+      -  name: Sleep for 15 seconds and timeout
          tags: sleep60
          wait_for:
-           delay: 30
+           delay: 15
            timeout: 0
 
       - name: Start NGiNX
