@@ -1,12 +1,5 @@
 ---
-- name: Playbook
-  hosts: webserver
-  become: yes
-  become_user: root
-  gather_facts: false
-  serial: 1
-  max_fail_percentage: 0
-  tasks:
+tasks:
     - name: Yum update the kernel
       package:
         name: kernel
