@@ -25,7 +25,7 @@
       
     - name: Create .ssh folder
       file:
-        path: /home/{{ item.username}}/.ssh
+        path: /home/"{{item.username}}"/.ssh
         state: directory
         owner: "{{ item.username}}"
         group: wheel
