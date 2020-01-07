@@ -1,0 +1,23 @@
+---
+- name: Playbook
+  hosts: webserver
+  become: yes
+  become_user: root
+  tasks:
+    - name: Create new user
+      user:
+        name: newuser
+    - name: Create .ssh folder
+      file:
+        path: ~newuser/.ssh
+        state: directory
+        owner: newuser
+        group: newuser
+        mode: 0700
+     - name: Upload SSH key
+       copy:
+        src: ../keys/newuser
+        dest: ~newuser/.ssh/id_rsa
+        owner: newuser
+        group: newuser
+        mode: 0700
