@@ -28,10 +28,14 @@
         path: /home/{{item.username}}/.ssh
         state: directory
         owner: "{{ item.username}}"
-        group: wheel
+        group: "{{ item.username}}"
         mode: 0700
       with_items: "{{ users }}"
-
-    - name: Placing SSH Key to Authorized Key
-      authorized_key: user="{{item.username}}" key="{{ lookup('file', './keys/{{ item.username}}')}}"
-      with_items: "{{ users }}"
+      
+    - name: Upload SSH PB key
+      copy:
+       src: ../keys/{{item.username}}
+       dest: /home/{{item.username}}/.ssh/authorized_keys
+       owner: "{{ item.username}}"
+       group: "{{ item.username}}"
+       mode: 0700  
