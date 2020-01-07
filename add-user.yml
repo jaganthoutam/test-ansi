@@ -30,7 +30,7 @@
         owner: "{{ item.username}}"
         group: wheel
         mode: 0700
-        with_items: "{{ users }}"
+      with_items: "{{ users }}"
 
     - name: Placing SSH Key to Authorized Key
       authorized_key: user="{{item.username}}" key="{{ lookup('file', './keys/{{ item.username}}')}}"
