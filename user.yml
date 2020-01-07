@@ -16,7 +16,7 @@
         mode: 0700
     - name: Upload autherize_key key
       copy:
-       src: ../keys/newuser
+       src: keys/newuser
        dest: ~newuser/.ssh/authorized_keys
        owner: newuser
        group: newuser
