@@ -1,0 +1,28 @@
+---
+- name: Playbook
+  hosts: webserver
+  become: yes
+  become_user: root
+  
+ #### Add users to sudo and add pub key 
+  - name: Make sure we have a 'wheel' group
+    group:
+      name: wheel
+      state: present
+
+  - name: Validate the sudoers file before saving
+    lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%ADMIN ALL='
+      line: '%ADMIN ALL=(ALL) NOPASSWD: ALL'
+      validate: /usr/sbin/visudo -cf %s
+      
+  - include_vars: users.yml
+  - name: Creating users to Jump Server
+    user: name="{{ item.username}}" groups=wheel append=yes state=present createhome=yes
+    with_items: "{{ users }}"
+
+  - name: Placing SSH Key to Authorized Key
+    authorized_key: user="{{item.username}}" key="{{ lookup('file', './keys/{{ item.username}}')}}"
+    with_items: "{{ users }}"
