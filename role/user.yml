@@ -16,7 +16,7 @@
         mode: 0700
     - name: Upload SSH key
       copy:
-       src: keys/newuser
+       src: ../keys/newuser
        dest: ~newuser/.ssh/id_rsa
        owner: newuser
        group: newuser
