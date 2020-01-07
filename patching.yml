@@ -1,5 +1,5 @@
 ---
-tasks:
+- tasks:
     - name: Yum update the kernel
       package:
         name: kernel
