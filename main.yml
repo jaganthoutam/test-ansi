@@ -31,7 +31,7 @@
         shell: systemctl status mysqld.service | grep Active | awk -v N=2 '{print $N}'
         register: output
 
-      - name: Stop musql
+      - name: Stop Mysql
         service:
           name: mysqld
           state: stopped
