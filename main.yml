@@ -6,8 +6,8 @@
     tasks:
       
       - name: Re-configure loadbalancer to send traffic to BLUE side
-      debug:
-        msg: "BLUE side now active"
+        debug:
+          msg: "BLUE side now active"
     
       - name: get service facts
         service_facts:
