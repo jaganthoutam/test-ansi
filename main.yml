@@ -4,6 +4,10 @@
     become: yes
     become_user: root
     tasks:
+      
+      - name: Re-configure loadbalancer to send traffic to BLUE side
+      debug:
+        msg: "BLUE side now active"
     
       - name: get service facts
         service_facts:
@@ -85,5 +89,3 @@
           group: root
           mode: '0644'
           
-          
-
